@@ -1,7 +1,7 @@
 {
-  "name": "typescript-common-scaffold",
+  "name": "typescript-component-scaffold",
   "version": "1.0.0",
-  "description": "scaffold of common module or component enhanced with typescript",
+  "description": "scaffold of common component enhanced with typescript",
   "license": "ISC",
   "browser": "dist/index.js",
   "scripts": {
