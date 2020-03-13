@@ -4,6 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import pkg from './package.json';
 import themeConfig from './theme';
 
@@ -17,10 +18,11 @@ var thirdpartyCSS = [path.resolve(__dirname, 'node_modules')];
 
 if (!isProd) {
     thirdpartyCSS.push([path.resolve(__dirname, 'es'), path.resolve(__dirname, 'lib')]);
-} 
+}
 
+console.log( path.resolve(__dirname, 'src/index.d.ts'), `${ASSETS_PATH}/index.d.ts`, '=============');
 export default function(env = {}) {
-    
+
     return {
         mode: MODE,
         entry: {
@@ -58,7 +60,11 @@ export default function(env = {}) {
                 use: [{
                     loader: 'babel-loader',
                     options: {
-                        cacheDirectory: true
+                        cacheDirectory: true,
+                        plugins: [
+                            // 引入样式为 css
+                            ['import', { libraryName: 'antd', style: 'css' }]
+                        ]
                     }
                 }]
             }, {
@@ -66,7 +72,7 @@ export default function(env = {}) {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: "ts-loader"
+                        loader: 'ts-loader'
                     }
                 ]
             }, {
@@ -138,7 +144,12 @@ export default function(env = {}) {
             new CaseSensitivePathsPlugin(),                              // 文件大小写检测
             new MiniCssExtractPlugin({
                 filename: CSS_NAME
-            })
+            }),
+            new CopyWebpackPlugin([
+                {
+                    from: path.resolve(__dirname, 'src/index.d.ts')
+                }
+            ])
         ]
     };
 }

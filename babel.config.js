@@ -9,7 +9,7 @@ module.exports = function(api) {
             ],
             // useBuiltIns: 'entry',
             modules: process.env.BABEL_ENV === 'esm' ? false : 'commonjs'     // transform esm to cjs, false to keep esm.
-        }], 
+        }],
         '@babel/preset-react'
     ];
 
@@ -31,8 +31,7 @@ module.exports = function(api) {
         // JS 引入的图片全部转成 base64格式, 避免打包后路径错误的问题.
         ['babel-plugin-inline-import-data-uri', {
             extensions: ['png', 'jpg', 'jpeg', 'gif', 'svg']
-        }],
-        ['import', { libraryName: 'antd' }]
+        }]
     ];
 
     return {

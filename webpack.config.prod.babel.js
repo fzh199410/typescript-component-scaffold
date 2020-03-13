@@ -7,8 +7,6 @@ export default function(env = {}) {
     return webpackMerge(baseConfig(env), {
         externals: [
             'antd',
-            'echarts',
-            'echarts-for-react',
             'react',
             'react-dom',
             'prop-types'
