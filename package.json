@@ -1,22 +1,25 @@
 {
   "name": "typescript-component-scaffold",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "scaffold of common component enhanced with typescript",
   "license": "ISC",
   "browser": "dist/index.js",
   "scripts": {
-    "build:umd": "cross-env NODE_ENV=production webpack --config webpack.config.prod.babel.js --colors --display-error-details",
+    "build:umd": "cross-env NODE_ENV=production LIBRARY_TARGET=umd webpack --config webpack.config.prod.babel.js --colors --display-error-details",
+    "build:esm": "cross-env NODE_ENV=production LIBRARY_TARGET=commonjs-module webpack --config webpack.config.prod.babel.js --colors --display-error-details",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
     "mock": "node mock-server/server.js",
     "start:mock": "concurrently \"npm start\" \"npm run mock\"",
     "lint:js": "eslint -c .eslintrc.prod.json --fix",
     "test": "jest",
-    "package": "cross-env BUILD_PATH=dist npm run build:umd",
+    "package": "cross-env BUILD_PATH=dist npm run build:umd && BUILD_PATH=es npm run build:esm",
     "publish:patch": "npm run package && gulp version-patch && npm publish",
     "publish:minor": "npm run package && gulp version-minor && npm publish",
     "publish:major": "npm run package && gulp version-major && npm publish",
     "unpublish": "npm unpublish -f",
-    "git:push": "gulp git-push"
+    "git:push": "gulp git-push",
+    "compile-ts": " tsc -v && tsc -p src",
+    "compile-ts:watch": " tsc -v && tsc -p src --watch"
   },
   "husky": {
     "hooks": {

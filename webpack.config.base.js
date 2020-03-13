@@ -10,6 +10,7 @@ import themeConfig from './theme';
 
 const libraryName = pkg.libraryName;
 const MODE = process.env.NODE_ENV;
+const libraryTarget = process.env.LIBRARY_TARGET;
 const isProd = MODE === 'production';
 const ASSETS_PATH = process.env.BUILD_PATH || 'build';
 const JS_NAME = 'index.js';
@@ -20,7 +21,6 @@ if (!isProd) {
     thirdpartyCSS.push([path.resolve(__dirname, 'es'), path.resolve(__dirname, 'lib')]);
 }
 
-console.log( path.resolve(__dirname, 'src/index.d.ts'), `${ASSETS_PATH}/index.d.ts`, '=============');
 export default function(env = {}) {
 
     return {
@@ -33,7 +33,7 @@ export default function(env = {}) {
             path: path.resolve(__dirname, ASSETS_PATH),
             filename: JS_NAME,
             library: isProd ? libraryName : undefined,
-            libraryTarget: isProd ? 'umd' : undefined
+            libraryTarget: isProd ? libraryTarget : undefined
         },
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.jsx', '.css', '.scss'],
